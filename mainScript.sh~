@@ -1,0 +1,23 @@
+#!/bin/bash 
+. bashFunc.sh                   # header files that contains the awk function
+
+read -p "Enter Skill: " userinp
+
+printf "\n" 
+
+awk_func # Running the function
+
+numLines=$(grep $userinp buffer.tex | wc -l) 
+
+if [ "${numLines}" -eq "0" ];
+then
+    echo "no skills exist for: $userinp"
+else
+    echo "${numLines} projects for skill: $userinp  "
+fi
+
+
+
+
+
+
