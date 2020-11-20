@@ -1,0 +1,46 @@
+#+TITLE: Resume Project Adder
+#+AUTHOR: Alvi Ahmed
+*Status:* In Development
+*Type:* Personal
+
+
+* Objective
+
+To create a script that allows me to build a resume that caters to
+companies wanted skills more quickly. 
+
+When I input some skills that companies are looking for, the script
+looks through a list of projects that I have already done that have the same
+skills and adds it into a new resume template. 
+
+Thus creating a specific resume taylored to the needs of the position.
+
+* Logs 
+
+** Log 1 
+
+*** Progress
+- Using awk I was able to select entire snippet from a tex file  
+describing the project from a skill pattern match. 
+
+- These snippets are then inputted in a buffer.tex and then a sed
+  command inserts them in the proper position in the resume template
+
+- Reason for buffer is so that I can process snippets further for more
+  information, i.e. difficulty / complexity level, relevance / date
+  and etc. 
+
+- Have code in place for creating and deleting tmp files but still
+  using buffer.tex for debugging 
+
+*** Next Steps 
+
+- Implementing constraints 
+  - resume must be 1 page
+  - more advanced and newer projects should have priority over
+    simplier or older ones in a certain skill set
+- Need to include some type of tag in the project list that accounts
+  for complexity and relevance  
+- Need to find out how to ensure everything stays on 1 page
+- At the end of the script should compile to PDF
+
