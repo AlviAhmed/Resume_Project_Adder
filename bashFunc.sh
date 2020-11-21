@@ -1,7 +1,10 @@
 #!/bin/bash
 awkFunc(){
     tmpFile=$(mktemp) || exitFunc
-    awk -v var="$userinp" 'index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > buffer.tex 
+    awk -v var="$userinp" 'index($0,var)' \
+        RS="\n\n" ORS="\n\n" \
+        projects_list.tex | cat | \
+    awk "/Pr:/"
 }
 lvlFunc(){
     arrayLvl=(A B C)
