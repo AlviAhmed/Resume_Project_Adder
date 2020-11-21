@@ -10,7 +10,7 @@ do
     read -p "Enter Skill: " userinp
     echo ""
     awkFunc
-    # lvlFunc
+    lvlFunc
     # sedFunc
     
     numLines=$(grep $userinp buffer.tex | wc -l) 
