@@ -1,10 +1,19 @@
-#!/bin/bash 
+#!/bin/bash
 awkFunc(){
     tmpFile=$(mktemp) || exitFunc
     awk -v var="$userinp" 'index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > buffer.tex 
 }
+lvlFunc(){
+    arrayLvl=(A B C)
+    for i in ${arrayLvl[@]}; do
+        lvlVal="Pr:"$i
+        fileVal="buffer"$i".tex"
+        awk -v var="$lvlVal" 'index($0,var)' RS="\n\n" ORS="\n\n" buffer.tex > $fileVal
+        done
+}
 
 sedFunc(){
+    
     sed -i '/Projects Start/r buffer.tex' resume.tex 
 }
 
