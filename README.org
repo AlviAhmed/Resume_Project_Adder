@@ -15,7 +15,25 @@ skills and adds it into a new resume template.
 
 Thus creating a specific resume taylored to the needs of the position.
 
-* Logs 
+* Logs  
+
+** Log2 
+
+*** Progress 
+
+- Arbitrary priorities are given to projects and script now able to seperate priorities into seperate buffers and projects to
+  resume in order from highest priority to lowest priority in general
+
+*NOTE:* Function is present to clean the resume and remove lines with
+"Pr", however still need to keep those lines for debugging purposes
+
+*NOTE:* Being able to control page limit will be put on hold for
+  now, need to work on other functions before I focus on that. For now
+  will manually edit resume to 1 page if needed
+
+*** Next Steps 
+- ask for position and company and after user inputs skills creates a
+  new directory with the modified resume file
 
 ** Log 1 
 

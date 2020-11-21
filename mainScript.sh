@@ -11,7 +11,6 @@ do
     echo ""
     awkFunc
     lvlFunc
-    # sedFunc
     
     numLines=$(grep $userinp buffer.tex | wc -l) 
 

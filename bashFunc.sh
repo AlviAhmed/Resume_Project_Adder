@@ -3,21 +3,34 @@ awkFunc(){
     tmpFile=$(mktemp) || exitFunc
     awk -v var="$userinp" 'index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > buffer.tex 
 }
+
 lvlFunc(){
     arrayLvl=(A B C)
     for i in ${arrayLvl[@]}; do
         lvlVal="Pr:"$i
         fileVal="buffer"$i".tex"
-        awk -v var="$lvlVal" 'index($0,var)' RS="\n\n" ORS="\n\n" buffer.tex > $fileVal
+        awk -v var="$lvlVal" 'index($0,var)' RS="\n\n" ORS="\n\n" buffer.tex >> $fileVal
         done
 }
 
+lvlCleaner(){
+    sed -i '/Pr:/d' resume.tex
+}
+
 sedFunc(){
+    arrayLvl=(C B A)
+    for i in ${arrayLvl[@]}; do
+        fileVal="buffer"$i".tex"
+        sed -i "/Projects Start/r $fileVal" resume.tex
+        echo "" > $fileVal
+        done
     
-    sed -i '/Projects Start/r buffer.tex' resume.tex 
 }
 
 cleanupFunc(){
+    echo "Adding to resume file"
+    sedFunc
+    # lvlCleaner
     echo "Removing tmp file"
     rm -f $tmpFile
 
