@@ -21,8 +21,10 @@ Thus creating a specific resume taylored to the needs of the position.
 
 *** Progress 
 
-- Arbitrary priorities are given to projects and script now able to seperate priorities into seperate buffers and projects to
-  resume in order from highest priority to lowest priority in general
+- Arbitrary priorities are given to projects and script now able to
+  seperate priorities into seperate buffers, from there buffers that
+  contain higher priority projects are put into the resume first, then
+  lower priority ones.  
 
 *NOTE:* Function is present to clean the resume and remove lines with
 "Pr", however still need to keep those lines for debugging purposes
