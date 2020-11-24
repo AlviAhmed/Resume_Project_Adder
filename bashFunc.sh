@@ -1,8 +1,24 @@
 #!/bin/bash
+
+direcFunc(){
+    comp=$(echo $comp | sed -e "s/ /\_/g")
+    pos=$(echo $pos | sed -e "s/ /\_/g")
+    name=$(echo $name | sed -e "s/ /\_/g")
+    dirname=$comp\_$pos
+    mkdir $dirname
+    filename=$dirname\/$name\_$comp\_$pos.tex
+    touch $filename
+    cat resume.tex > $filename
+}
+
 awkFunc(){
     tmpFile=$(mktemp) || exitFunc
     awk -v var="$userinp" 'index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > buffer.tex 
 }
+
+# var=$(echo $pos | sed -e "s/ /\_/g")
+
+
 
 lvlFunc(){
     arrayLvl=(A B C)
@@ -10,28 +26,26 @@ lvlFunc(){
         lvlVal="Pr:"$i
         fileVal="buffer"$i".tex"
         awk -v var="$lvlVal" 'index($0,var)' RS="\n\n" ORS="\n\n" buffer.tex >> $fileVal
-        done
+    done
 }
 
 lvlCleaner(){
-    sed -i '/Pr:/d' resume.tex
+    sed -i '/Pr:/d' $filename
 }
 
 sedFunc(){
     arrayLvl=(C B A)
     for i in ${arrayLvl[@]}; do
         fileVal="buffer"$i".tex"
-        sed -i "/Projects Start/r $fileVal" resume.tex
+        sed -i "/Projects Start/r $fileVal" $filename
         echo "" > $fileVal
         done
-    
 }
 
 cleanupFunc(){
-    echo "Adding to resume file"
+    echo "Adding to $filename file"
     sedFunc
-    # lvlCleaner
-    echo "Removing tmp file"
+     echo "Removing tmp file"
     rm -f $tmpFile
 
 }

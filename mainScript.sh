@@ -3,15 +3,16 @@
 
 trap cleanupFunc EXIT
 
-
+name="Alvi Ahmed"
+read -p "Enter name of company: " comp
+read -p "Enter name of position: " pos
+direcFunc
 while :
-
 do      
     read -p "Enter Skill: " userinp
     echo ""
     awkFunc
     lvlFunc
-    
     numLines=$(grep $userinp buffer.tex | wc -l) 
 
     if [ "${numLines}" -eq "0" ];
