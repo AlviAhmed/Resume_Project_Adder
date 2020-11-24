@@ -1,10 +1,22 @@
 #!/bin/bash
 
-direcFunc(){
+
+resStoreCheckFunc(){
+    DIR="resume_storage"
+    if [ -d "$DIR" ];
+    then
+        printf "Directory already exists....clear \n"
+    else
+        printf "Directory DOES NOT exist making one right now... \n"
+        mkdir $DIR
+    fi
+}
+
+resDirFunc(){
     comp=$(echo $comp | sed -e "s/ /\_/g")
     pos=$(echo $pos | sed -e "s/ /\_/g")
     name=$(echo $name | sed -e "s/ /\_/g")
-    dirname=$comp\_$pos
+    dirname=$DIR\/$comp\_$pos
     mkdir $dirname
     filename=$dirname\/$name\_$comp\_$pos.tex
     touch $filename
@@ -15,10 +27,6 @@ awkFunc(){
     tmpFile=$(mktemp) || exitFunc
     awk -v var="$userinp" 'index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > buffer.tex 
 }
-
-# var=$(echo $pos | sed -e "s/ /\_/g")
-
-
 
 lvlFunc(){
     arrayLvl=(A B C)
@@ -40,6 +48,7 @@ sedFunc(){
         sed -i "/Projects Start/r $fileVal" $filename
         echo "" > $fileVal
         done
+        echo "" > buffer.tex
 }
 
 cleanupFunc(){

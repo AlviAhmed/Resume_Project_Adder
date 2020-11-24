@@ -17,6 +17,30 @@ Thus creating a specific resume taylored to the needs of the position.
 
 * Logs  
 
+** Log3 
+
+*** Progress 
+
+- Script takes in company name and position as input, name already in
+  script for now
+- Script now makes a generic directory (or checks if it already
+  exists) to store the different resumes that it creates, file and
+  directory names are based on inputted position and company name
+
+*** Next Steps 
+- *TODO*: Fix bug were projects may be repeated in resume if the
+  project contains multiple skills that the user is inputting.
+  - For example, if a project has skills listed as C++ and Embedded
+    Systems, the project will be inserted into the resume twice if the
+    user inputs C++ and Embedded as skills.
+  - Fixing this bug will tie into another aspect of the script that I
+    am trying to finish which is listing the skills at  the bottom of
+    the resume. 
+
+
+
+
+
 ** Log2 
 
 *** Progress 

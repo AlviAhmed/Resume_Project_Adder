@@ -1,0 +1,193 @@
+\documentclass[11pt]{article}   
+\usepackage[margin = 0.75in]{geometry}     
+\usepackage{textgreek} 
+\usepackage{graphicx} 
+\usepackage{amssymb}
+\usepackage[T1]{fontenc} 
+\usepackage{textcomp}    
+\usepackage[font=scriptsize, labelfont=bf, skip = 0pt]{caption} 
+\usepackage{titletoc} 
+\usepackage{lmodern}  
+\usepackage{float} 
+\usepackage{subcaption} 
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage{titlesec}   
+\usepackage{titling}
+\usepackage{setspace} 
+\usepackage{enumitem}
+\usepackage{gensymb} 
+\usepackage{lipsum}
+
+\newcommand{\spaces}{1em}
+
+
+\titleformat{\subsection} 
+{\bfseries\small}
+{}
+{}
+{}  
+
+\titleformat{\section}
+{\large}
+{}
+{0.1em}
+{\bfseries}[\titlerule] 
+
+\titlespacing{\section} 
+{0em} %before text / left margin
+{0.5em} %space between 
+{0.5em} %space after text 
+
+
+\titlespacing{\subsection} 
+{0em} %before text / left margin
+{0.25em} %space between 
+{1em} %space after text
+{\Large}
+
+
+
+\title{
+	Alvi Ahmed
+}
+\author{alviahmed1234@gmail.com | \underline{\url{https://github.com/AlviAhmed}}}
+
+\newcommand{\uniname}{Ryerson University}
+\newcommand{\unigrad}{Graduated April 2020}
+\newcommand{\uniloc}{Toronto, Ontario}
+
+\newcommand{\uni}[3]{
+  \begin{flushleft}
+    {\small\bfseries #1}
+    \hfill
+    {\small\bfseries #2}
+    \hfill
+    {\small\bfseries #3}
+\end{flushleft}
+  \vspace{-0.7em}
+}
+
+\newcommand{\threeway}[3]{
+  \begin{flushleft}
+    {\bfseries #1}
+    \hfill
+    {\bfseries #2}
+    \hfill
+    {\bfseries #3}
+  \end{flushleft}
+  \vspace{-0.7em}
+}
+
+
+\renewcommand{\maketitle}{
+    \begin{center}
+    \phantom{.} %if I did not add this, vspace would not work for some reason
+    % phantom is used to create space, in this case a blank space
+    \vspace{-2em}
+    	{\Huge\bfseries \thetitle}
+    	\vspace{-0.5em}
+		\par\noindent\rule{\textwidth}{2pt}
+	\end{center} 
+	\begin{center} 
+		\vspace{-1em}  
+		{\small\theauthor}
+	\end{center}
+} 
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\maketitle    
+
+\section*{Education}
+	\uni{\uniloc}{\uniname}{\unigrad}
+	\begin{itemize}[noitemsep,nolistsep]   
+		\item \textbf{Major:} Electrical Engineering, B.Eng
+        \item \textbf{Programming Coursework: } Algorithms \& Data Structures,
+           Operating Systems, Object Oriented Eng. Analysis 
+        \item \textbf{EE Coursework: } Real Time Computer Control Systems,
+          Embedded Systems, Systems on Chip Design, Multimedia Systems,
+          Digital Signal Processing, Circuits, Logic Design
+        \end{itemize}
+        \section*{Projects}
+
+        % Projects Start
+
+
+Pr:A
+\textbf{Waveform Generator: }
+\underline{\url{https://github.com/AlviAhmed/Waveform_Generator}}
+\begin{itemize}[noitemsep,nolistsep]
+\item Designed and developed a linear voltage-controlled function generator. 
+\item Includes selectable waveforms, a selectable frequency range, and amplitude control
+\item \textbf{ \underline{Skills Used:} Analog Circuit Design, Multisim, Oscilloscope}
+\end{itemize}            
+
+
+
+Pr:B
+\textbf{Designing an Audio Amplifier}
+\underline{\url{https://github.com/AlviAhmed/Designing-an-Audio-Amplifier}}
+\begin{itemize}[noitemsep,nolistsep]
+\item Designed a practical audio amplifier using LM741 op-amps
+\item The design was successful in producing the user's specifications
+\item \textbf{ \underline{Skills Used:} Analog Circuit Design, Multisim, Oscilloscope}
+\end{itemize}
+
+
+
+Pr:C
+\textbf{LED Business Sign}
+\underline{\url{https://github.com/AlviAhmed/LED_Business_Sign}}
+\begin{itemize}[noitemsep,nolistsep]
+\item Designed a controllable LED sign using nothing but glue logic and passive components
+\item The user can change the speed of the blinking patters, input their own patterns or
+  use a default pattern
+\item \textbf{ \underline{Skills Used:} Digital Circuit Design, Multisim, Oscilloscope}
+\end{itemize}
+
+
+ 
+        \section*{Relevant Extra Curriculars}
+            \textbf{L3 Wescam Hackathon II}  \hfill \textbf{2019}
+            \begin{itemize}[noitemsep,nolistsep]
+              \item Integrated edge detection, image detection and object tracking for a
+                surveillance done by utilizing C++, OpenCV libraries and Unix
+              \item \textbf{\underline{Skills Used:} C++, OpenCV, Unix}
+	            \end{itemize}
+                    \vspace{\spaces}
+            
+
+          \section*{Skills}
+
+          \vspace{\spaces}
+
+          \textbf{(Skills)}:
+          
+          \vspace{\spaces}
+          
+
+
+			                          
+
+\end{document}
+
+
+
+
+
+
+
+
+
+      
+      

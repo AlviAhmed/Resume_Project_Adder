@@ -1,12 +1,13 @@
 #!/bin/bash 
-. bashFunc.sh                   # header files that contains the awk function
+. bashFunc.sh                   
 
 trap cleanupFunc EXIT
 
+resStoreCheckFunc
 name="Alvi Ahmed"
 read -p "Enter name of company: " comp
 read -p "Enter name of position: " pos
-direcFunc
+resDirFunc
 while :
 do      
     read -p "Enter Skill: " userinp
@@ -17,9 +18,9 @@ do
 
     if [ "${numLines}" -eq "0" ];
     then
-        echo "no projects exist for skill: $userinp"
+        echo "No projects exist for skill: $userinp"
     else
-        echo "${numLines} projects for skill: $userinp  "
+        echo "Project(s) exist for this skill: $userinp  "
     fi
 
     echo "To exit script press <CTRL+C>"
