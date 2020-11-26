@@ -26,16 +26,15 @@ resDirFunc(){                   # this function deals with making the directorie
 }
 
 skillCheckerFunc(){             # this function deals with checking if same skill inputted twice
-    
-    skillExist=$(grep $userinp skills | wc -l) # checking the skills the user inputted against skills list (will change later for it is for debugging purposes)
-    if [ "${skillExist}" -eq 0 ];              # if no matches with user input are found in skills list, then input skill into skill list and send message
-    then
+    skillExist=$(grep $userinp skills | wc -l) # checking the skills the user inputted against skills list
+    if [ "${skillExist}" -eq 0 ];              # checks how many matches between user input and file
+    then                                       # if no matches, then unique skill, proceed to next function
         echo "Inputting: $userinp into skills buffer \n"
-        echo $userinp >> skills
+        echo "$userinp" >> skills
         awkFunc
     else                        # if there are matches, then that means user inputted skill twice, will make userinp equal to null so
         printf "Skill: $userinp, already inputted \n"
-        return 
+        return                  # return and loop back to read prompt
     fi
 }
 
@@ -57,19 +56,19 @@ awkFunc(){                      # This is the main function that deals with sele
     # using awk to find paragraphs with matching patterns
     # later inputting them into placehold.tex, NOTE: will change this soon, placehold will not be needed in the future
     
-    awk -v var="$userinp" 'index($0,var) && index($0,"Skills Used:")' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
-    
+    awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
     nameFunc < placehold.tex    # making placehold.tex an input to another function, nameFunc
     
     if [ "${boolVar}" -eq "0" ]; # if the boolVar from nameFunc is 0, means no projects of the same name
     then
         printf "\n Inputting project into buffer \n"
         cat placehold.tex > buffer.tex
-        echo $dataVar >> name_list
+        echo "" > placehold.tex
+        echo "$placeholdVar" >> name_list
         lvlFunc
     else
         printf "\n Project already exists in resume \n"
-        echo "" >> placehold.tex
+        echo "" > placehold.tex
     fi
     # numSkill=$(cat name_list | wc -l) 
     # printf " \n Number of projects in resume: $numSkill \n"
@@ -78,8 +77,14 @@ awkFunc(){                      # This is the main function that deals with sele
 nameFunc(){                     # This function makes sure that projects of the same name are not inputted into resume
     
     while read -r data; do      # while reading data from inputted file (i.e. placehold.tex)
-        dataVar=$(sed -n '/^\\textbf/p' $data | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project
-        boolVar=$(cat $filename | grep -s $dataVar | wc -l) # searching for projects of same name in resume
+        placeholdVar=$(sed -n '/^\\textbf/p' $data | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
+        echo "$placeholdVar"
+        echo "$placeholdVar" | wc -l
+        echo cat name_list | grep "$placeholdVar"
+        boolVar=$(cat name_list | grep  "$placeholdVar" | wc -l) # searching for projects of same name in resume
+        echo "hello"
+        echo $boolVar
+        
     done
 }
 
