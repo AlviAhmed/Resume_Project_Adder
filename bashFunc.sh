@@ -49,14 +49,32 @@ mainCondFunc(){     # this function deals with whether or not to run the skill c
     else
         skillCheckerFunc        # else if not empty go on to the next function
     fi
+    
+}
+
+
+validateSkillFunc(){
+    while read -r data; do 
+        skillLine=$(sed -n '/Skills Used:/p' $data | cut -d'}' -f2) # extracting skills from each project
+        skillSearch=$(cat $skillLine | grep "$userinp" | wc -l)
+        if [ "${skillSearch}" -eq "0"];
+        then
+            printf "\n Your input: $userinp is not a skill please try again \n"
+            return
+        else
+            printf " \n Skill: $userinp found! \n"
+            $data > placehold.tex 
+        fi
+    done
 }
 
 awkFunc(){                      # This is the main function that deals with selecting the projects from list that match with user input
 
     # using awk to find paragraphs with matching patterns
     # later inputting them into placehold.tex, NOTE: will change this soon, placehold will not be needed in the future
-    
-    awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
+
+     awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > validateSkillFunc
+    # awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
     nameFunc < placehold.tex    # making placehold.tex an input to another function, nameFunc
     
     if [ "${boolVar}" -eq "0" ]; # if the boolVar from nameFunc is 0, means no projects of the same name
