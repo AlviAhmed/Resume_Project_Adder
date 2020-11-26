@@ -11,7 +11,6 @@ resStoreCheckFunc(){            # this function is in charge of creating the mai
         printf "Directory DOES NOT exist making one right now... \n"
         mkdir $DIR
     fi
-
 }
 
 resDirFunc(){                   # this function deals with making the directories and files for the new resumes
@@ -24,7 +23,6 @@ resDirFunc(){                   # this function deals with making the directorie
     filename=$dirname\/$name\_$comp\_$pos.tex # defining filename which is name_company_position and the a .tex
     touch $filename                           # create the blank file
     cat resume.tex > $filename                # copy a blank template of the resume into the newly created file
-
 }
 
 skillCheckerFunc(){             # this function deals with checking if same skill inputted twice
@@ -33,26 +31,25 @@ skillCheckerFunc(){             # this function deals with checking if same skil
     if [ "${skillExist}" -eq 0 ];              # if no matches with user input are found in skills list, then input skill into skill list and send message
     then
         echo "Inputting: $userinp into skills buffer \n"
-        echo $userinp >> skills 
+        echo $userinp >> skills
+        awkFunc
     else                        # if there are matches, then that means user inputted skill twice, will make userinp equal to null so
         printf "Skill: $userinp, already inputted \n"
-        userinp=""
+        return 
     fi
-    
 }
 
-mainCondFunc(){     # this function deals with whether or not to run main text editing functions depending on userinput
+mainCondFunc(){     # this function deals with whether or not to run the skill checker functions based on user input
     
     printf "Making tmp file"    # Tmp file and tmp file functions for testing, will later implement
     tmpFile=$(mktemp) || exitFunc
-
-    if [ -z "$userinp" ];       # if user input is empty, means it was made empty since user inputted same skill, other wise awkFunc
+    if [ -z "$userinp" ];       # if user input is empty
     then
         printf "Empty or Repeated Input Please Try Again \n"
+        return                  # return and loop back to prompt
     else
-        awkFunc
+        skillCheckerFunc        # else if not empty go on to the next function
     fi
-    
 }
 
 awkFunc(){                      # This is the main function that deals with selecting the projects from list that match with user input
@@ -68,13 +65,14 @@ awkFunc(){                      # This is the main function that deals with sele
     then
         printf "\n Inputting project into buffer \n"
         cat placehold.tex > buffer.tex
-        echo $dataVar >> name_list 
+        echo $dataVar >> name_list
+        lvlFunc
     else
         printf "\n Project already exists in resume \n"
+        echo "" >> placehold.tex
     fi
     # numSkill=$(cat name_list | wc -l) 
     # printf " \n Number of projects in resume: $numSkill \n"
-    
 }
 
 nameFunc(){                     # This function makes sure that projects of the same name are not inputted into resume
@@ -83,7 +81,6 @@ nameFunc(){                     # This function makes sure that projects of the 
         dataVar=$(sed -n '/^\\textbf/p' $data | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project
         boolVar=$(cat $filename | grep -s $dataVar | wc -l) # searching for projects of same name in resume
     done
-    
 }
 
 
