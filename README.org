@@ -17,6 +17,18 @@ Thus creating a specific resume taylored to the needs of the position.
 
 * Logs  
 
+** Log3.5 
+
+*** Progess 
+
+- Had to do some tests since I was still getting duplicate projects
+- In *tester.sh* was able to get userinput and compare it to the
+  Skills Used in each extracted project   
+
+*** Next Steps 
+
+- Implement functions in *tester.sh* in script
+
 ** Log3 
 
 *** Progress 
