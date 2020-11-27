@@ -1,4 +1,11 @@
 
+Pr:A
+\textbf{Personal Website: }  (in development) \underline{\url{https://www.alviahmed.com}}
+\begin{itemize}[noitemsep,nolistsep]
+\item \textbf{\underline{Skills Used:} HTML, CSS, Bootstrap, Unix, Git}
+\end{itemize}
+
+
 Pr:B
 \textbf{Bank Account Program: }
 \underline{\url{https://github.com/AlviAhmed/Bank_Manager}}
@@ -21,3 +28,5 @@ Pr:A
 \item Developed a Digital PID Controller in C using concurrent programming via pthreads
 \item \textbf{ \underline{Skills Used:} C/C++, Digital Control Systems, Multithreading}
 \end{itemize}
+
+

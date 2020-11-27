@@ -74,7 +74,7 @@ repeatCheckerFunc(){             # this function deals with checking if same ski
     then                                       # if no matches, then unique skill, proceed to next function
         printf "\n Inputting: $userinp into skills buffer \n"
         echo "$userinp" >> skills
-        nameFunc < placehold.tex 
+        nameFunc 
     else                        # if there are matches, then that means user inputted skill twice, will make userinp equal to null so
         printf "Skill: $userinp, already inputted \n"
         echo "" > placehold.tex 
@@ -85,16 +85,11 @@ repeatCheckerFunc(){             # this function deals with checking if same ski
 
 nameFunc(){                     # This function makes sure that projects of the same name are not inputted into resume
     printf "\n Starting Name Function \n"
-    while read -r data; do      # while reading data from inputted file (i.e. placehold.tex)
-        placeholdVar=$(sed -n '/^\\textbf/p' $data | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
+        placeholdVar=$(sed -n '/^\\textbf/p' placehold.tex | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
         printf "\n Placeholder var: $placeholdVar \n"
         echo "$placeholdVar" | wc -l
-        cat name_list | grep "$placeholdVar"
         boolVar=$(cat name_list | grep  "$placeholdVar" | wc -l) # searching for projects of same name in resume
-        printf "hello \n"
         printf "$boolVar \n"
-    done
-
     if [ "${boolVar}" -eq "0" ]; # if the boolVar from nameFunc is 0, means no projects of the same name
     then
         printf "\n Inputting project into buffer \n"
@@ -103,8 +98,9 @@ nameFunc(){                     # This function makes sure that projects of the 
         echo "$placeholdVar" >> name_list
         lvlFunc
     else
-        printf "\n Project already exists in resume \n"
-        echo "" > placehold.tex
+        printf "\n Project $placeholdVar already exists in resume \n"
+        awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
+
     fi
 }
 
