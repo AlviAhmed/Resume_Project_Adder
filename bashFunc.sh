@@ -43,7 +43,6 @@ mainCondFunc(){     # this function deals with whether or not to run the skill c
 
 awkFunc(){        # This is the main function that deals with selecting the projects from list that match with user input
     # using awk to find paragraphs with matching patterns
-    echo "" > placehold.tex
     printf "\n Starting Awk Function \n"
     awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
     validateSkillFunc < placehold.tex 
@@ -74,22 +73,20 @@ repeatCheckerFunc(){             # this function deals with checking if same ski
     then                                       # if no matches, then unique skill, proceed to next function
         printf "\n Inputting: $userinp into skills buffer \n"
         echo "$userinp" >> skills
-        nameFunc 
+        nameFunc
     else                        # if there are matches, then that means user inputted skill twice, will make userinp equal to null so
         printf "Skill: $userinp, already inputted \n"
-        echo "" > placehold.tex 
         return                  # return and loop back to read prompt
     fi
 }
 
 
-nameFunc(){                     # This function makes sure that projects of the same name are not inputted into resume
+nameFunc(){                     # This function makes sure that projects of the same name are not inputted into resxume
     printf "\n Starting Name Function \n"
-        placeholdVar=$(sed -n '/^\\textbf/p' placehold.tex | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
-        printf "\n Placeholder var: $placeholdVar \n"
-        echo "$placeholdVar" | wc -l
-        boolVar=$(cat name_list | grep  "$placeholdVar" | wc -l) # searching for projects of same name in resume
-        printf "$boolVar \n"
+    placeholdVar=$(sed -n '/^\\textbf/p' placehold.tex | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
+    printf "\n placeholdVar: $placeholdVar"
+    boolVar=$(cat name_list | grep  "$placeholdVar" | wc -l) # searching for projects of same name in resume
+    printf "\n Boolvar $boolVar \n"
     if [ "${boolVar}" -eq "0" ]; # if the boolVar from nameFunc is 0, means no projects of the same name
     then
         printf "\n Inputting project into buffer \n"
@@ -98,10 +95,24 @@ nameFunc(){                     # This function makes sure that projects of the 
         echo "$placeholdVar" >> name_list
         lvlFunc
     else
-        printf "\n Project $placeholdVar already exists in resume \n"
-        awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
-
+        printf "\n Some repeated projects, Deleting them \n"
+        while read -r line; do
+            printf "\n Line: $line \n"
+            echo "$(awk -v var="$line" '!index($0,var)' RS="\n\n" ORS="\n\n" placehold.tex)" > placehold.tex # deleting paragraphs in place
+        done < name_list
+        printf "\n Inputting project into buffer \n"
+        cat placehold.tex > buffer.tex
+        echo "" > placehold.tex
+        echo "$placeholdVar" >> name_list
+        lvlFunc
     fi
+
+
+
+
+
+
+    
 }
 
 

@@ -3,20 +3,42 @@
 
 
 sameProj="Bank"
-
 nameFunc(){                     
     printf "\n Starting Name Function \n \n"
-    placeholdVar=$(sed -n '/^\\textbf/p' placehold.tex | cut -d'{' -f2 | cut -d':' -f1)
+    name="ProjC"
     while read -r line; do
-        printf "\n Line: $line \n"
-        echo "$(awk -v var="$line" '!index($0,var)' RS="\n\n" ORS="\n\n" placehold.tex)" > placehold.tex # deleting paragraphs in place
-
-
+        numLeft=$(grep $line placehold.tex | wc -l)
+        if [ "$numLeft" -gt "1" ];
+        then
+            printf "\n $line IS REPEATING \n"
+            repeatDelete
+        else
+            printf "\n $line is not repeating \n"
+        fi
     done < name_list
-        
+
+}
+
+repeatDelete(){
+    while [ "$numLeft" -gt "1" ];do
+        echo "$(awk -v var="$line" '!index($0,var) || f++'  placehold.tex)" > placehold.tex # deleting projects 1 by 1
+        numLeft=$(grep $line placehold.tex | wc -l)
+    done 
 }
 
 nameFunc
+
+
+
+# nameFunc(){                     
+#     printf "\n Starting Name Function \n \n"
+#     placeholdVar=$(sed -n '/^\\textbf/p' placehold.tex | cut -d'{' -f2 | cut -d':' -f1)
+#     while read -r line; do
+#         printf "\n Line: $line \n"
+#         echo "$(awk -v var="$line" '!index($0,var)' RS="\n\n" ORS="\n\n" placehold.tex)" > placehold.tex # deleting paragraphs in place
+#     done < name_list
+# }
+
 
 # userinp=""
 # validateSkillFunc(){
