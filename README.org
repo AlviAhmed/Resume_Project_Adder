@@ -17,6 +17,43 @@ Thus creating a specific resume taylored to the needs of the position.
 
 * Logs  
 
+** Log4  
+
+*** Progress  
+
+- Temporarily hard coded company, name and position name for testing
+  and debugging purposes
+
+- The *mainCondFunc* function deals with if the user input is
+  blank. This is the *User Input Verification Stage*. Once passed, the
+  script goes on to the next stage which is the *Skill Verification Stage*.
+
+- With the *validateSkillFunc*, this solves the problem of verifying
+  the users input as a skill within a project instead of just another
+  word in the document. If the user input is a valid skill mentioned
+  in *Skills Used*, then the script goes on to the *repeatCheckerFunc*
+  function which checks whether or not skill has been repeated /
+  previously entered before. If passed the next stage starts which is
+  the *Project Verification Stage*.  
+
+- At this stage, the function *nameFunc* is used makes sure that
+  projects that are being inputted into the
+  resume file don't share the same name with a project that is already
+  in the resume file. 
+
+
+*** Next Steps 
+
+- Need to fix bug with *nameFunc*,
+  since if there is a project in placeholder that is in resume, but
+  there also exists another project that is not in resume then the
+  function will throw out both projects even though there is 1 not
+  repeated.
+- Need to do more quality assurance by testing different user inputs
+  and dealing with the possible bugs
+
+
+
 ** Log3.5 
 
 *** Progess 

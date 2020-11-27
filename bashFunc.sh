@@ -25,58 +25,76 @@ resDirFunc(){                   # this function deals with making the directorie
     cat resume.tex > $filename                # copy a blank template of the resume into the newly created file
 }
 
-skillCheckerFunc(){             # this function deals with checking if same skill inputted twice
+
+
+mainCondFunc(){     # this function deals with whether or not to run the skill checker functions based on user input
+    
+    printf "\n Creating tmp file \n"    # Tmp file and tmp file functions for testing, will later implement
+    tmpFile=$(mktemp) || exitFunc
+    if [ -z "$userinp" ];       # if user input is empty
+    then
+        printf "\n Empty or Repeated Input Please Try Again \n"
+        return                  # return and loop back to prompt
+    else
+        awkFunc
+    fi
+    
+}
+
+awkFunc(){        # This is the main function that deals with selecting the projects from list that match with user input
+    # using awk to find paragraphs with matching patterns
+    echo "" > placehold.tex
+    printf "\n Starting Awk Function \n"
+    awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
+    validateSkillFunc < placehold.tex 
+
+}
+
+validateSkillFunc(){
+    printf "\n Start validateSkillFunc \n"
+    while read -r data; do
+        skillLine=$(sed -n '/Skills Used:/p' $data | cut -d'}' -f2) # extracting skills line from each  project
+        printf " \n Skills line: $skillLine \n "
+        if [[ "$skillLine" =~ .*"$userinp".* ]];
+        then
+            printf " \n Skill: $userinp found! \n"
+            repeatCheckerFunc
+        else
+            printf "\n Your input: $userinp, is not a valid/listed skill please try again \n"
+            return
+        fi
+
+    done
+}
+
+repeatCheckerFunc(){             # this function deals with checking if same skill inputted twice
+    printf "\n Starting Repeater Function \n"
     skillExist=$(grep $userinp skills | wc -l) # checking the skills the user inputted against skills list
     if [ "${skillExist}" -eq 0 ];              # checks how many matches between user input and file
     then                                       # if no matches, then unique skill, proceed to next function
-        echo "Inputting: $userinp into skills buffer \n"
+        printf "\n Inputting: $userinp into skills buffer \n"
         echo "$userinp" >> skills
-        awkFunc
+        nameFunc < placehold.tex 
     else                        # if there are matches, then that means user inputted skill twice, will make userinp equal to null so
         printf "Skill: $userinp, already inputted \n"
+        echo "" > placehold.tex 
         return                  # return and loop back to read prompt
     fi
 }
 
-mainCondFunc(){     # this function deals with whether or not to run the skill checker functions based on user input
-    
-    printf "Making tmp file"    # Tmp file and tmp file functions for testing, will later implement
-    tmpFile=$(mktemp) || exitFunc
-    if [ -z "$userinp" ];       # if user input is empty
-    then
-        printf "Empty or Repeated Input Please Try Again \n"
-        return                  # return and loop back to prompt
-    else
-        skillCheckerFunc        # else if not empty go on to the next function
-    fi
-    
-}
 
-
-validateSkillFunc(){
-    while read -r data; do 
-        skillLine=$(sed -n '/Skills Used:/p' $data | cut -d'}' -f2) # extracting skills from each project
-        skillSearch=$(cat $skillLine | grep "$userinp" | wc -l)
-        if [ "${skillSearch}" -eq "0"];
-        then
-            printf "\n Your input: $userinp is not a skill please try again \n"
-            return
-        else
-            printf " \n Skill: $userinp found! \n"
-            $data > placehold.tex 
-        fi
+nameFunc(){                     # This function makes sure that projects of the same name are not inputted into resume
+    printf "\n Starting Name Function \n"
+    while read -r data; do      # while reading data from inputted file (i.e. placehold.tex)
+        placeholdVar=$(sed -n '/^\\textbf/p' $data | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
+        printf "\n Placeholder var: $placeholdVar \n"
+        echo "$placeholdVar" | wc -l
+        cat name_list | grep "$placeholdVar"
+        boolVar=$(cat name_list | grep  "$placeholdVar" | wc -l) # searching for projects of same name in resume
+        printf "hello \n"
+        printf "$boolVar \n"
     done
-}
 
-awkFunc(){                      # This is the main function that deals with selecting the projects from list that match with user input
-
-    # using awk to find paragraphs with matching patterns
-    # later inputting them into placehold.tex, NOTE: will change this soon, placehold will not be needed in the future
-
-     awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > validateSkillFunc
-    # awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
-    nameFunc < placehold.tex    # making placehold.tex an input to another function, nameFunc
-    
     if [ "${boolVar}" -eq "0" ]; # if the boolVar from nameFunc is 0, means no projects of the same name
     then
         printf "\n Inputting project into buffer \n"
@@ -88,22 +106,6 @@ awkFunc(){                      # This is the main function that deals with sele
         printf "\n Project already exists in resume \n"
         echo "" > placehold.tex
     fi
-    # numSkill=$(cat name_list | wc -l) 
-    # printf " \n Number of projects in resume: $numSkill \n"
-}
-
-nameFunc(){                     # This function makes sure that projects of the same name are not inputted into resume
-    
-    while read -r data; do      # while reading data from inputted file (i.e. placehold.tex)
-        placeholdVar=$(sed -n '/^\\textbf/p' $data | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
-        echo "$placeholdVar"
-        echo "$placeholdVar" | wc -l
-        echo cat name_list | grep "$placeholdVar"
-        boolVar=$(cat name_list | grep  "$placeholdVar" | wc -l) # searching for projects of same name in resume
-        echo "hello"
-        echo $boolVar
-        
-    done
 }
 
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-userinp=""
+userinp="CNC"
 validateSkillFunc(){
     printf "\n start valid func \n"
     while read -r data; do
@@ -11,7 +11,7 @@ validateSkillFunc(){
             printf " \n Skill: $userinp found! \n"
             $data > placehold.tex 
         else
-            printf "\n Your input: $userinp, is not a skill please try again \n"
+            printf "\n Your input: $userinp, is not a valid/listed skill please try again \n"
             return
         fi
 
