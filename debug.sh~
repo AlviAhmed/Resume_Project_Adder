@@ -1,0 +1,12 @@
+#!/bin/bash
+
+checkBlank(){
+    if [ -z "$userinp" ];       # if user input is empty
+    then
+        printf "\n Empty or Repeated Input Please Try Again \n"
+        return                  # return and loop back to prompt
+    else
+        awkFunc
+    fi
+
+}

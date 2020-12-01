@@ -27,6 +27,8 @@ resDirFunc(){                   # this function deals with making the directorie
 
 
 
+
+
 mainCondFunc(){     # this function deals with whether or not to run the skill checker functions based on user input
     
     printf "\n Creating tmp file \n"    # Tmp file and tmp file functions for testing, will later implement
@@ -85,36 +87,30 @@ nameFunc(){                     # This function makes sure that projects of the 
     printf "\n Starting Name Function \n"
     placeholdVar=$(sed -n '/^\\textbf/p' placehold.tex | cut -d'{' -f2 | cut -d':' -f1) # extracting names from each project in placehold
     printf "\n placeholdVar: $placeholdVar"
-    boolVar=$(cat name_list | grep  "$placeholdVar" | wc -l) # searching for projects of same name in resume
-    printf "\n Boolvar $boolVar \n"
-    if [ "${boolVar}" -eq "0" ]; # if the boolVar from nameFunc is 0, means no projects of the same name
-    then
-        printf "\n Inputting project into buffer \n"
-        cat placehold.tex > buffer.tex
-        echo "" > placehold.tex
-        echo "$placeholdVar" >> name_list
-        lvlFunc
-    else
-        printf "\n Some repeated projects, Deleting them \n"
-        while read -r line; do
-            printf "\n Line: $line \n"
-            echo "$(awk -v var="$line" '!index($0,var)' RS="\n\n" ORS="\n\n" placehold.tex)" > placehold.tex # deleting paragraphs in place
-        done < name_list
-        printf "\n Inputting project into buffer \n"
-        cat placehold.tex > buffer.tex
-        echo "" > placehold.tex
-        echo "$placeholdVar" >> name_list
-        lvlFunc
-    fi
-
-
-
-
-
-
     
+    while read -r line; do
+        numLeft=$(grep "$line" placehold.tex | wc -l)
+        if [ "$numLeft" -gt "1" ];
+        then
+            printf "\n $line IS REPEATING \n"
+            repeatDelete
+        else
+            printf "\n $line is not repeating \n"
+        fi
+    done < name_list
+    
+    printf "\n Inputting project into buffer \n"
+    cat placehold.tex > buffer.tex
+    echo "$placeholdVar" >> name_list
+    lvlFunc
 }
 
+repeatDelete(){
+    while [ "$numLeft" -gt "1" ];do
+        echo "$(awk -v var="$line" '!index($0,var) || f++'  placehold.tex)" > placehold.tex # deleting projects 1 by 1
+        numLeft=$(grep "$line" placehold.tex | wc -l)
+    done 
+}
 
 lvlFunc(){                      # This function deals organizing priority projects into correct file
     arrayLvl=(A B C)            # Priority A, B, C
@@ -135,13 +131,13 @@ sedFunc(){                      # this function deals with inputting the accumul
         fileVal="buffer"$i".tex"
         printf "Inserting project into file"
         sed -i "/Projects Start/r $fileVal" $filename # this line inputs them below the line Projects Start in the resume
-        echo "" > $fileVal                            # clear the buffer once done
+        echo " " > $fileVal                            # clear the buffer once done
     done
     # Clearing all the buffer files 
-    echo "" > buffer.tex
-    echo "" > skills 
-    echo "" > placehold.tex
-    echo "" > name_list
+    echo " " > buffer.tex
+    echo " " > skills 
+    echo " " > placehold.tex
+    echo "test" > name_list 
 }
 
 cleanupFunc(){                  # Function deals with final process when user done with script

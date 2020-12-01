@@ -17,6 +17,29 @@ Thus creating a specific resume taylored to the needs of the position.
 
 * Logs  
 
+
+** Log4.5 
+
+*In progress*
+
+*** Progress 
+
+- While testing  the script noticed a couple bugs with receiving
+  projects 
+  - *BUG* When searching for skill in *project_list.tex* instead of
+    restricting the search to just the Skills Used line, it also
+    extracts projects with skills mentioned in the description,
+    causing unintended projects to be selected. This is apparent when
+    typing in the skill "Control".
+    - This is probably due to the fact that since I am specifying a
+      paragraph to be selected, awk automatically searches throughout
+      the whole project paragraph instead of just the Skills Used
+      line. When not specifying paragraphs with newlines, awk is able
+      to select the skill line that has the skill the user is looking for
+    # - *Solution* Use awk to get the skill lines that include the skill
+    #   the user mentions since it does this properly, get the line
+    #   number of the skills line and use that to select the whole paragraph.
+
 ** Log4  
 
 *** Progress  

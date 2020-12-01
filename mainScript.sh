@@ -1,5 +1,5 @@
 #!/bin/bash 
-. bashFunc.sh                   
+. debug.sh                   
 
 trap cleanupFunc EXIT
 
@@ -13,7 +13,8 @@ resDirFunc
 while :
 do      
     read -p "Enter Skill: " userinp
-    mainCondFunc
+    skillCheck
+    # mainCondFunc
     # numLines=$(grep $userinp buffer.tex | wc -l) 
     # if [ "${numLines}" -eq "0" ];
     # then
