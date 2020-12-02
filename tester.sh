@@ -113,14 +113,14 @@ awkFunc(){        # This is the main function that deals with selecting the proj
     if ( (index(var,varinp)) ) { 
         print $0; 
     } 
-} 
-END{ 
 }' projects_list.tex > buffer.tex
+repeatProj
+}
 
 
-    # awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
-    # validateSkillFunc < placehold.tex 
-
+repeatProj(){
+    awk 'NR==FNR{a[$0]++; next}  { if (a[$0] > 1){printf ("\n Match \n"); print NF, a[FNR], $0 }else{printf ("\n No Match \n")} print NF;}' buffer.tex buffer.tex
 }
 
 awkFunc
+

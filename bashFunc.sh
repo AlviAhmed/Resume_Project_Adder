@@ -71,21 +71,8 @@ END{
 
 }
 
-validateSkillFunc(){
-    printf "\n Start validateSkillFunc \n"
-    while read -r data; do
-        skillLine=$(sed -n '/Skills Used:/p' $data | cut -d'}' -f2) # extracting skills line from each  project
-        printf " \n Skills line: $skillLine \n "
-        if [[ "$skillLine" =~ .*"$userinp".* ]];
-        then
-            printf " \n Skill: $userinp found! \n"
-            repeatCheckerFunc
-        else
-            printf "\n Your input: $userinp, is not a valid/listed skill please try again \n"
-            return
-        fi
-
-    done
+repeatProj(){
+    awk 'NR==FNR{a[FNR]=$0; next}  {if (a[FNR] == $0){printf ("\n Awsome \n"); print a[FNR], $0 }else{printf ("\n No Match \n")}}' buffer.tex buffer.tex
 }
 
 repeatCheckerFunc(){             # this function deals with checking if same skill inputted twice
