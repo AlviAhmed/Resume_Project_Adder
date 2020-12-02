@@ -4,10 +4,9 @@
 BEGIN{
     printf ("\n BEGINNING of Script \n");
     lines=0;
-    currLine = 0;
-    skillLine[lines];
     RS=ORS="\n\n";
     FS="\n";
+    userinput=userinp;
 }
 {
     printf ("\n Line Number %d \n", NR);
@@ -17,8 +16,9 @@ BEGIN{
     else{
         var=$NF;
     }
-    if ( ((var ~ /Control/)) ){
+    if ( ((index(var,"userinput"))) ){
         print $0;
+        # print $0 >> "buffer.tex";
     }
 }
 END{
