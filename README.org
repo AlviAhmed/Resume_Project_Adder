@@ -44,10 +44,10 @@ Thus creating a specific resume taylored to the needs of the position.
       searched for userinput skill. Therefore guranteeing that no
       unintended projects are added. The debugging and testing code is
       in *extractor.awk*
-  - Also I made the project list more uniform so that fields are
+- Also I made the project list more uniform so that fields are
     consistent, therefore making it easier to extract the title and
     the skills list all essential for searching projects and finding
-    repeat projects
+    repeat projects.
 
 ***  Next Steps 
 
