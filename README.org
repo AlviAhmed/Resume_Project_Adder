@@ -23,13 +23,13 @@ Thus creating a specific resume taylored to the needs of the position.
 
 *** Progress 
 
-- Need to make sure projects in buffer are in proper format so that
+- Need to make sure projects in *buffer.tex* or *placehold.tex* are in proper format so that
   their fields can be parsed by awk function properly
-- if the buffer file is empty at a line to the top, need this to
+- if the *buffer.tex* or *placehold.tex* is empty, add a line to the top, need this to
   ensure all other projects have the correct fields in the awk function
-- With repeat function, no matter how times 1 projects repeats, awk
-  script will input only 1 instance on them, however to manage
-  repeating projects needed to use *placehold.tex* before inputting
+- With repeat function, no matter how many times 1 project repeats, awk
+  script will input only 1 instance of them, however to manage
+  repeating projects, needed to use *placehold.tex* before inputting
   projects into buffer. Current repeat function in *tester.sh*
 - 
 ** Log4.5 
