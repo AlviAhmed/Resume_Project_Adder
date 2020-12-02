@@ -17,9 +17,7 @@ Thus creating a specific resume taylored to the needs of the position.
 
 * Logs  
 
-*In progress*
-
-** Log5  
+** Log5  (in progress)
 
 *** Progress 
 
