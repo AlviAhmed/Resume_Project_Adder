@@ -36,9 +36,19 @@ Thus creating a specific resume taylored to the needs of the position.
       the whole project paragraph instead of just the Skills Used
       line. When not specifying paragraphs with newlines, awk is able
       to select the skill line that has the skill the user is looking for
-    # - *Solution* Use awk to get the skill lines that include the skill
-    #   the user mentions since it does this properly, get the line
-    #   number of the skills line and use that to select the whole paragraph.
+    - *Solution* After doing more research into awk I realized that I
+      can just change how fields are percieved. Therefore, I made the
+      field variable equal to newline and since all skill lines are
+      second to last, I made a variable storing the second to last
+      field of each record (in this case being the paragraph) and
+      searched for userinput skill. Therefore guranteeing that no
+      unintended projects are added. The debugging and testing code is
+      in *extractor.awk* 
+
+***  Next Steps 
+
+- Need to go back fix nameFunc and ensure that there are no repeated
+  projects that are entered into the buffer.
 
 ** Log4  
 
