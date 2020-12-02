@@ -46,8 +46,28 @@ mainCondFunc(){     # this function deals with whether or not to run the skill c
 awkFunc(){        # This is the main function that deals with selecting the projects from list that match with user input
     # using awk to find paragraphs with matching patterns
     printf "\n Starting Awk Function \n"
-    awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
-    validateSkillFunc < placehold.tex 
+    awk -v varinp="$userinp" ' BEGIN{
+    lines=0; 
+    RS=ORS="\n\n"; 
+    FS="\n"; 
+} 
+{ 
+    if (NF > 0){ 
+        var=$(NF - 1); 
+    } 
+    else{ 
+        var=$NF; 
+    } 
+    if ( (index(var,varinp)) ) { 
+        print $0; 
+    } 
+} 
+END{ 
+}' projects_list.tex > buffer.tex
+
+
+    # awk -v var="$userinp" 'index($0,"Skills Used:") && index($0,var)' RS="\n\n" ORS="\n\n" projects_list.tex > placehold.tex
+    # validateSkillFunc < placehold.tex 
 
 }
 
