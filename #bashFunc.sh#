@@ -73,7 +73,7 @@ END{
 
 repeatProj(){
     awk 'BEGIN{  
-    RS=ORS="\n\n";
+    RS=ORS="\n\n"; 
     FS="\n";
 }  
  NR==FNR{a[$4]++; next}  {if (a[$4] > 1){printf ("\n Match \n"); print a[FNR], $0 }else{printf ("\n No Match \n")}}' buffer.tex buffer.tex

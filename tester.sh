@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+# ---------- File for testing various functions ----------
 
 # sameProj="Bank"
 # nameFunc(){                     
@@ -114,13 +114,16 @@ awkFunc(){        # This is the main function that deals with selecting the proj
         print $0; 
     } 
 }' projects_list.tex > buffer.tex
-repeatProj
 }
 
 
 repeatProj(){
-    awk 'NR==FNR{a[$0]++; next}  { if (a[$0] > 1){printf ("\n Match \n"); print NF, a[FNR], $0 }else{printf ("\n No Match \n")} print NF;}' buffer.tex buffer.tex
+    awk 'BEGIN{ 
+    RS=ORS="\n\n";
+    FS="\n";
+} 
+ NR==FNR{ a[$4]++; next} 
+{if (a[$4] > 1){a[$4]--;} else{print $0;}}' placehold.tex placehold.tex
 }
 
-awkFunc
-
+repeatProj

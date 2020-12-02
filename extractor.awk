@@ -7,14 +7,14 @@ BEGIN{
     FS="\n";
 }
 {
-    # print $4;
-    # lines++
+    print $4;
+    lines++
     
     if (NF > 0){
         var=$(NF - 1);
     }
     else{
-                                    var=$NF;
+               var=$NF;
     }
     if ( ((index(var,"Control"))) ){
         print $0;
