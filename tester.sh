@@ -126,4 +126,5 @@ repeatProj(){
 {if (a[$4] > 1){a[$4]--;} else{print $0;}}' placehold.tex placehold.tex
 }
 
-repeatProj
+repeatProj > tester.txt
+

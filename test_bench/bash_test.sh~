@@ -1,0 +1,12 @@
+repeatProj(){
+    awk 'BEGIN{ 
+    RS=ORS="\n\n";
+    FS="\n";
+} 
+ NR==FNR{ a[$4]++; next} 
+{if (a[$4] > 1){a[$4]--;} else{print $0;}}' buffer.tex placeholder.tex
+
+}
+
+
+repeatProj

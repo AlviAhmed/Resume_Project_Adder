@@ -1,5 +1,5 @@
 #!/bin/bash 
-. debug.sh                   
+. bashFunc.sh
 
 trap cleanupFunc EXIT
 
@@ -13,18 +13,7 @@ resDirFunc
 while :
 do      
     read -p "Enter Skill: " userinp
-    skillCheck
-    # mainCondFunc
-    # numLines=$(grep $userinp buffer.tex | wc -l) 
-    # if [ "${numLines}" -eq "0" ];
-    # then
-    #     echo "No projects exist for skill: $userinp"
-    #     echo ""
-    # else
-    #     echo "Project(s) exist for this skill: $userinp  "
-    #     echo ""
-    # fi
-
+    mainCondFunc
     echo "To exit script press <CTRL+C>"
 
 done
