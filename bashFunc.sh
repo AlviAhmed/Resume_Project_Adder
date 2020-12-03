@@ -47,6 +47,7 @@ awkFunc(){
     lines=0; 
     RS=ORS="\n\n"; 
     FS="\n"; 
+    a=0; 
 } 
 { 
     if (NF > 0){ 
@@ -55,20 +56,18 @@ awkFunc(){
     else{ 
         var=$NF; 
     } 
-    if ( (index(var,varinp)) ) { 
-        print "\n",$0,"\n"; 
-    } 
-}' projects_list.tex > placeholder.tex
+    if ( (index(var,varinp)) ) {   
+          print $0;
+    }  
+}' projects_list.tex >> placeholder.tex
 }
 
 repeatProj(){
-    awk 'BEGIN{ 
+    awk 'BEGIN{  
     RS=ORS="\n\n";
     FS="\n";
-} 
- NR==FNR{ a[$4]++; next} 
-{if (a[$4] >= 1);else{print $0;}}' buffer.tex placeholder.tex
-
+}  
+ NR==FNR{a[$4]++; next} {if (a[$4] > 1){a[$4]--;} else{print $0;} }' placeholder.tex placeholder.tex 
 }
 
 repeatSkillCheck(){             
@@ -79,7 +78,6 @@ repeatSkillCheck(){
         printf "\n Inputting: $userinp into skills buffer \n"
         echo "$userinp" >> skills
         awkFunc
-        emptyCheck
     else                       
         printf "Skill: $userinp, already inputted \n"
         return                  
@@ -100,17 +98,17 @@ lvlCleaner(){                   # gets rid of the priority tags in the final res
     sed -i '/Pr:/d' $filename
 }
 
-emptyCheck(){
-    var=$(grep textbf buffer.tex | wc -l)
-    if [ "$var" -eq "0" ];
-    then
-        cat placeholder.tex >> buffer.tex
-    else
-        repeatProj >> buffer.tex
-    fi
-}
+# emptyCheck(){
+#     var=$(grep textbf buffer.tex | wc -l)
+#     if [ "$var" -eq "0" ];
+#     then
+#         cat placeholder.tex > buffer.tex
+#     else
+#         repeatProj > buffer.tex
+#     fi
+# }
 
-sedFunc(){                     
+sedFunc(){
     arrayLvl=(C B A)            
     for i in ${arrayLvl[@]}; do
         fileVal="buffer"$i".tex"
@@ -118,15 +116,15 @@ sedFunc(){
         sed -i "/Projects Start/r $fileVal" $filename 
         echo " " > $fileVal                            
     done
-    echo "%projects filler" > buffer.tex
-    echo " " >> buffer.tex
-    echo " " > skills 
-    echo "%projects filler" > placeholder.tex
-    echo " " >> placeholder.tex
+    cat /dev/null > skills 
+    cat /dev/null > placeholder.tex
+    # cat /dev/null > buffer.tex
 
 }
 
 cleanupFunc(){                  # Function deals with final process when user done with script
+    echo "Checking for Repeat Projects in Placeholder"
+    repeatProj > buffer.tex
     echo "Adding projects to File"
     lvlFunc
     echo "Adding to $filename file" 
